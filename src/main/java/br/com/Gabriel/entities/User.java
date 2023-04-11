@@ -3,6 +3,14 @@ package br.com.Gabriel.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_user") // Colocar um outro nome pois User é palavra reservada do H2
 public class User implements Serializable{
 	
 	/**
@@ -10,8 +18,9 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
-	private long id;
+	@Id // Id = serve para mostrar que o atributo abaixo é chave primaria
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // autoincrement 
+	private Long id;
 	private String name;
 	private String phone;
 	private String email;
