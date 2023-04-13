@@ -1,12 +1,17 @@
 package br.com.Gabriel.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +30,13 @@ public class User implements Serializable{
 	private String phone;
 	private String email;
 	private String password;
+	
+	//ASSOCIAÇÃO UM CLIENTE TEM VÁRIOS PEDIDOS
+	@JsonIgnore // PARA NÃO DAR LOOPING POIS TEM ASSOCIAÇÃO DOS DOIS LADOS( USER E ORDER)
+	@OneToMany(mappedBy = "client") // MOSTRANDO QUE ESTA DO OUTRO LADO DA TABELA 
+	private List<Order> orders = new ArrayList<>();
+	
+	
 	
 	//CONSTRUTORES OBRIGATORIOS POR ESTAR USANDO UM FRAMEWORK
 	public User() {}
@@ -77,6 +89,11 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	//SÓ COLOCA O GET POIS NÃO VAI TROCAR A LISTA HORA NENHUMA, VAI SÓ ACRESCENTAR E REMOVER
+		public List<Order> getOrders() {
+			return orders;
+		}
 
 	@Override
 	public int hashCode() {
@@ -95,6 +112,8 @@ public class User implements Serializable{
 		return Objects.equals(email, other.email) && id == other.id && Objects.equals(name, other.name)
 				&& Objects.equals(password, other.password) && Objects.equals(phone, other.phone);
 	}
+
+	
 	
 	
 	
