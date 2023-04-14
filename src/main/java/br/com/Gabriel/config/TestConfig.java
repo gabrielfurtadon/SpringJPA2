@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.Gabriel.entities.Order;
 import br.com.Gabriel.entities.User;
+import br.com.Gabriel.entities.enums.OrderStatus;
 import br.com.Gabriel.repositories.OrderRepository;
 import br.com.Gabriel.repositories.UserRepository;
 
@@ -30,9 +31,9 @@ public class TestConfig implements CommandLineRunner{
 		User u1 = new User(null, "Maria Brown","988888888", "maria@gmail.com", "123456"); // id null pois vai gerar no banco
 		User u2 = new User(null, "Alex Green","977777777", "alex@gmail.com", "123456");
 		
-		Order o1 = new Order(null, Instant.parse("2023-04-20T19:53:07Z"), u1); //PASSANDO O USUARIO PARA FAZER A ASSOCIAÇÃO DESSE OBJ
-		Order o2 = new Order(null, Instant.parse("2023-04-21T03:42:10Z"), u2); //O HORARIO VAI ESTAR 3 HORAS ANTES NO BR
-		Order o3 = new Order(null, Instant.parse("2023-04-22T15:21:22Z"), u1);
+		Order o1 = new Order(null, Instant.parse("2023-04-20T19:53:07Z"), OrderStatus.PAID, u1); //PASSANDO O USUARIO PARA FAZER A ASSOCIAÇÃO DESSE OBJ
+		Order o2 = new Order(null, Instant.parse("2023-04-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2); //O HORARIO VAI ESTAR 3 HORAS ANTES NO BR
+		Order o3 = new Order(null, Instant.parse("2023-04-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT,u1);
 		
 		//SALVAR NO BANCO como lista (array)
 		userRepository.saveAll(Arrays.asList(u1, u2));
