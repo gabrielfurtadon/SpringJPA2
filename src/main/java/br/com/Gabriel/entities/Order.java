@@ -25,10 +25,8 @@ public class Order implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-dd'T'HH:dd:ss'Z'", timezone = "GMT") //GARANTIR QUE A FORMATAÇÃO DA DATA APARECERA CORRETAMENTE
 	private Instant moment;
-	
 	private Integer orderStatus;
 	
 	//CRIAR A ASSOCIAÇÃO: MUITOS PEDIDOS PARA UM CLIENTE
