@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import br.com.Gabriel.entities.Category;
 import br.com.Gabriel.entities.Order;
 import br.com.Gabriel.entities.User;
 import br.com.Gabriel.entities.enums.OrderStatus;
+import br.com.Gabriel.repositories.CategoryRepository;
 import br.com.Gabriel.repositories.OrderRepository;
 import br.com.Gabriel.repositories.UserRepository;
 
@@ -25,9 +27,20 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public void run(String... args) throws Exception { // TUDO QUE TIVER DENTRO DO RUN VAI SER EXECUTADO QUANDO A APP FOR INICIADA
+		
+		//PODE COLOCAR ANTES POIS ELA É UMA CLASSE INDEPENDENTE DA USER E ORDER
+		Category cat1 = new Category(null, "Electronics");
+		Category cat2 = new Category(null, "Books");
+		Category cat3 = new Category(null, "Computers");
+		
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		
 		User u1 = new User(null, "Maria Brown","988888888", "maria@gmail.com", "123456"); // id null pois vai gerar no banco
 		User u2 = new User(null, "Alex Green","977777777", "alex@gmail.com", "123456");
 		
