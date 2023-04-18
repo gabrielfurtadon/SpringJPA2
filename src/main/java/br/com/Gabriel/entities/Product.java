@@ -9,6 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -27,7 +30,9 @@ public class Product implements Serializable{
 	private Double price;
 	private String imgUrl;
 	
-	@Transient //IMPEDE QUE O JPA INTERPRETE 
+	//@Transient //IMPEDE QUE O JPA INTERPRETE 
+	@ManyToMany                                // DANDO NOME A CHAVE ESTRANGEIRA             //DEFINIR QUAL É A CHAVE ESTRANGEIRA DA OUTRA ENTIDADE
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name="category_id"))        //FALAR QUAL SERA A TABELA E CHAVES ESTRANGEIRAS QUE VAO ASSOCIAR A TABELA PRODUTO COM CATEGORIA 
 	private Set<Category> categories = new HashSet<>();     //SET = CONJUNTO -> GARANTIR QUE NAO VAI TER PRODUTO COM A MESMA CATEGORIA MAIS DE UMA VEZ 
 									// INSTANCIA PARA GARANTIR QUE A COÇÃO COMECE VAZIA E NAO NULA
 	

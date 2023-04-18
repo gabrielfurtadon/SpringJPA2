@@ -31,7 +31,7 @@ public class Order implements Serializable{
 	
 	//CRIAR A ASSOCIAÇÃO: MUITOS PEDIDOS PARA UM CLIENTE
 	@ManyToOne
-	@JoinColumn(name = "client_id") // DANDO NOME A CHAVE ESTRANGEIRA
+	@JoinColumn(name = "client_id") // (NA TABELA PEDIDOS DO BD VAI TER UMA CHAVE ESTRANGEIRA QUE VAI CONTER O ID DO USUARIO ASSOCIADO AO PEDIDO
 	private User client;
 	
 	public Order() {}
