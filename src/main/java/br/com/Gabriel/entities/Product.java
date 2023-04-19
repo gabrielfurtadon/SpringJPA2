@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -33,8 +36,12 @@ public class Product implements Serializable{
 	//@Transient //IMPEDE QUE O JPA INTERPRETE 
 	@ManyToMany                                // DANDO NOME A CHAVE ESTRANGEIRA             //DEFINIR QUAL É A CHAVE ESTRANGEIRA DA OUTRA ENTIDADE
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name="category_id"))        //FALAR QUAL SERA A TABELA E CHAVES ESTRANGEIRAS QUE VAO ASSOCIAR A TABELA PRODUTO COM CATEGORIA 
-	private Set<Category> categories = new HashSet<>();     //SET = CONJUNTO -> GARANTIR QUE NAO VAI TER PRODUTO COM A MESMA CATEGORIA MAIS DE UMA VEZ 
+	private Set<Category> categories = new HashSet<>();     //SET = CONJUNTO -> GARANTIR QUE NAO VAI TER PRODUTO COM A MESMA CATEGORIA MAIS DE UMA VEZ (NAO ADMITIR REPETIÇÕES DO MESMO ITEM)
 									// INSTANCIA PARA GARANTIR QUE A COÇÃO COMECE VAZIA E NAO NULA
+	
+	
+	@OneToMany(mappedBy = "id.product") // ID = PRODUCT | .PRODUCT = ORDEMITEMPK (product_id)
+	private Set<OrderItem> orderItems = new HashSet<>();
 	
 	public Product() {}
 
@@ -92,6 +99,15 @@ public class Product implements Serializable{
 		return categories;
 	}
 
+	@JsonIgnore
+	public Set<Order> getOrders() {
+		Set<Order> set = new HashSet<>();
+		for(OrderItem x : orderItems) { //PERCORRENDO A COLEÇÃO E PARA CADA ELEMNTO VAI ADICIONAR O X.GETORDER()
+			set.add(x.getOrder());
+		}
+		return set;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
