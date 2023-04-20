@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import br.com.Gabriel.entities.Category;
 import br.com.Gabriel.entities.Order;
 import br.com.Gabriel.entities.OrderItem;
+import br.com.Gabriel.entities.Payment;
 import br.com.Gabriel.entities.Product;
 import br.com.Gabriel.entities.User;
 import br.com.Gabriel.entities.enums.OrderStatus;
@@ -87,6 +88,10 @@ public class TestConfig implements CommandLineRunner{
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 		
+		Payment pay1 = new Payment(null, Instant.parse("2023-04-20T21:53:07Z"), o1); 
+		o1.setPayment(pay1);//Associação de mao dupla em memoria (ASSOCIANDO O PEDIDO O1 COM O PAGAMENTO PAY1
+		
+		orderRepository.save(o1);
 		
 	}
 	
