@@ -68,6 +68,13 @@ public class OrderItem implements Serializable{
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	//METODO QUE DA O SUBTOTAL DO PRODUTO (preço x quantidade)
+	// NA PLATAFORMA JAVA ENTERPRISE O QUE VALE É O GET (POR ISSO COLOCAR GETSUBTOTAL)
+	public Double getSubTotal() {
+		return price * quantity;
+	}
+	
 
 	@Override
 	public int hashCode() {

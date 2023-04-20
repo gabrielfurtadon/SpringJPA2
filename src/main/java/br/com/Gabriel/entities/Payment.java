@@ -5,6 +5,8 @@ import java.time.Instant;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Payment implements Serializable{
 	private Long id;
 	private Instant moment;
 	
+	@JsonIgnore //O PEDIDO TEM PAGAMENTO E O PAGAMENTO TEM PEDIDO, SE DEIXAR OS DOIS VAI DAR LOOPING 
 	@OneToOne
 	@MapsId
 	private Order order;
