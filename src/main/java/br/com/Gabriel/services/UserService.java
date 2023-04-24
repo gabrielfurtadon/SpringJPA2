@@ -25,4 +25,8 @@ public class UserService {
 		return obj.get(); // VAI RETORNAR UM OBJETO DO TIPO USER QUE ESTIVER DENTRO DO OPTIONAL
 	}
 	
+	public User insert(User obj) {
+		return repository.save(obj);
+	}
+	
 }
