@@ -12,6 +12,7 @@ import br.com.Gabriel.entities.User;
 import br.com.Gabriel.repositories.UserRepository;
 import br.com.Gabriel.services.exceptions.DatabaseException;
 import br.com.Gabriel.services.exceptions.ResourceNotFoundExceptions;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service //REGISTRA COMO SERVICE DO SPRING E ASSIM PODE SER INJETADO AUTOMATICAMENTE COM AUTOWIRED
 public class UserService {
@@ -45,9 +46,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
+		try {
 		User entity = repository.getReferenceById(id); //INSTANCIAR O USUARIO PELO JPA, SEM IR NO BANCO AINDA
 		updateData(entity, obj);
 		return repository.save(entity);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundExceptions(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
